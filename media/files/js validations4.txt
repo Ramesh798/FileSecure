@@ -1,0 +1,218 @@
+function userValid() {
+
+    var Name, EmailId, emailExp, Contact, Country, Location,JobTitle, Experience,Payment_Type, CTC, Currency, Password, ConPassword, Resume, Checkbox;
+    var _validFileExtensions = [".doc", ".docx"];
+
+    Name = document.getElementById("txtName").value;
+
+    EmailId = document.getElementById("txtEmail").value;
+
+    emailExp = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([com\co\.\in])+$/; // to validate email id
+
+    Contact = document.getElementById("txtContact").value;
+
+    Country = document.getElementById("ddlCountry").value;
+
+    Location = document.getElementById("txtLocation").value;
+
+    JobTitle = document.getElementById("txtJobTitle").value;
+   
+    Experience = document.getElementById("ddlExperience").value;
+
+    Payment_Type = document.getElementById("ddlPaymentType").value;
+
+    CTC = document.getElementById("txtCTC").value;
+
+    Currency = document.getElementById("ddlCurrency").value;
+
+    Password = document.getElementById("txtPassword").value;
+
+    ConPassword = document.getElementById("txtConPassword").value;
+
+    Resume = document.getElementById("FileUpload1").value;
+
+    Checkbox = document.getElementById("CheckBox1").value;
+
+    var letter = /[a-z]/;
+    var upper = /[A-Z]/;
+    var number = /[0-9]/;
+    var phoneNum = Contact.replace(/[^\d]/g, '');
+    var arrInputs = document.getElementById("FileUpload1");
+
+    if (Name == '' || Contact == '' || EmailId == '' || Location == '' || CTC=='' || Password == '' || ConPassword == '') {
+
+        alert("Please Enter All Details");
+
+        return false;
+
+    }
+
+    if (Name == '') {
+
+        alert("Please Enter FullName");
+
+        return false;
+
+    }
+
+    if (Contact == '') {
+
+        alert("Please Enter Contact Number");
+
+        return false;
+
+    }
+
+    if (JobTitle == '') {
+
+        alert('Please Enter Job Title');
+        return false;
+    }
+
+    if (Experience == 'Years of Experience') {
+
+        alert('Please Select Years of Experience');
+        return false;
+    }
+
+    if (Payment_Type == 'Payment') {
+
+        alert('Please Select Payment Type');
+        return false;
+    }
+
+    if (CTC == '') {
+        alert('Please Enter CTC');
+        return false;
+    }
+
+    if (isNaN(CTC)) {
+        alert('Please Enter Valid CTC');
+        return false;
+    }
+
+    
+    if (Currency == 'Currency') {
+        alert('Please Select Currency')
+        return false;
+    }
+
+    if (!(phoneNum.length > 6 && phoneNum.length < 11)) {
+        alert("Please Enter Correct Contact Number");
+        return false;
+    }
+
+    if (Country == 'Country') {
+        alert('Please Select Your Country');
+        return false;
+    }
+    if (Location == '') {
+
+        alert("Please Enter Your Current Location");
+
+        return false;
+
+    }
+
+    if (EmailId == '') {
+
+        alert("Please Enter Email Id");
+
+        return false;
+
+    }
+
+
+    if (Password.length < 6) {
+        alert("Please make sure password is longer than 6 characters.")
+        return false;
+    }
+    if (Password != ConPassword) {
+        alert("Please make sure passwords match.")
+        return false;
+    }
+    //if (!letter.test(Password)) {
+    //    alert("Please make sure password includes a lowercase letter.")
+    //    return false;
+    //}
+    //if (!number.test(Password)) {
+    //    alert("Please make sure Password Includes a Digit")
+    //    return false;
+    //}
+    //if (!upper.test(Password)) {
+    //    alert("Please make sure password includes an uppercase letter.");
+    //    return false;
+    //}
+
+    if (Password != '' && ConPassword == '') {
+
+        alert("Please Check Password");
+
+        return false;
+
+    }
+
+    if (Password != ConPassword) {
+
+        alert("Mismatch Password");
+
+        return false;
+
+    }
+
+    if (EmailId == '') {
+
+        alert("Email Id Is Required");
+
+        return false;
+
+    }
+
+    if (EmailId != '') {
+
+        if (!EmailId.match(emailExp)) {
+
+            alert("Invalid Email Id");
+
+            return false;
+
+        }
+
+    }
+
+    if (!document.getElementById("CheckBox1").checked) {
+        alert('You must agree to the terms first.');
+        return false;
+    }
+
+    if (document.getElementById("FileUpload1").value == '') {
+        alert("You forgot to attach Resume!");
+        document.getElementById("FileUpload1").focus();
+        return false;
+    }
+
+    for (var i = 0; i < arrInputs.length; i++) {
+        var oInput = arrInputs[i];
+        if (oInput.type == "file") {
+            var sFileName = oInput.value;
+            if (sFileName.length > 0) {
+                var blnValid = false;
+                for (var j = 0; j < _validFileExtensions.length; j++) {
+                    var sCurExtension = _validFileExtensions[j];
+                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                        blnValid = true;
+                        break;
+                    }
+                }
+
+                if (!blnValid) {
+                    alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+
+}
